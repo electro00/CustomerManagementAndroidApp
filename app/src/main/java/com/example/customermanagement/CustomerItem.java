@@ -4,7 +4,10 @@ public class CustomerItem {
     private String name;
     private String itemName;
     private String price;
-    private final int imageResource;
+    private int imageResource;
+
+    public CustomerItem() {
+    }
 
     public CustomerItem(String name, String itemName, String price, int imageResource) {
         this.name = name;

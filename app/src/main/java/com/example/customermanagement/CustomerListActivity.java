@@ -5,6 +5,10 @@ import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -27,8 +36,12 @@ public class CustomerListActivity extends AppCompatActivity {
     private ArrayList<CustomerItem> mCustomerList;
     private ManagingCustomerAdapter mAdapter;
 
+    private FirebaseFirestore mFirestore;
+    private CollectionReference mCustomers;
+
     private int gridNumber = 1;
     private boolean viewRow = true;
+    private int queryLimit = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,25 +63,80 @@ public class CustomerListActivity extends AppCompatActivity {
         mAdapter = new ManagingCustomerAdapter(this, mCustomerList);
         mRecyclerView.setAdapter(mAdapter);
 
-        initializeData();
+        mFirestore = FirebaseFirestore.getInstance();
+        mCustomers = mFirestore.collection("Customers");
+
+        queryData();
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_POWER_CONNECTED);
+        filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+        this.registerReceiver(powerReceiver, filter);
+    }
+
+    BroadcastReceiver powerReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+
+            if (action == null)
+                return;
+
+            switch (action) {
+                case Intent.ACTION_POWER_CONNECTED:
+                    queryLimit = 10;
+                    break;
+                case Intent.ACTION_POWER_DISCONNECTED:
+                    queryLimit = 3;
+                    break;
+            }
+
+            queryData();
+        }
+    };
+
+    private void queryData() {
+        mCustomerList.clear();
+
+        //mCustomers.whereEqualTo()...
+
+        mCustomers.orderBy("name").limit(queryLimit).get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                CustomerItem item = document.toObject(CustomerItem.class);
+                mCustomerList.add(item);
+            }
+
+            if (mCustomerList.size() == 0) {
+                initializeData();
+                queryData();
+            }
+
+            mAdapter.notifyDataSetChanged();
+        });
+
     }
 
     private void initializeData() {
-        String[] customersList = getResources().getStringArray(R.array.customer_name);
-        String[] boughtItemName = getResources().getStringArray(R.array.bought_item_name);
-        String[] price = getResources().getStringArray(R.array.price);
+        String[] customersList = getResources()
+                .getStringArray(R.array.customer_name);
+        String[] boughtItemName = getResources()
+                .getStringArray(R.array.bought_item_name);
+        String[] price = getResources()
+                .getStringArray(R.array.price);
 
-        TypedArray customersImageResource = getResources().obtainTypedArray(R.array.customer_image);
+        TypedArray customersImageResource = getResources()
+                .obtainTypedArray(R.array.customer_image);
 
-        mCustomerList.clear();
 
         for (int i = 0; i < customersList.length; i++) {
-            mCustomerList.add(new CustomerItem(customersList[i], boughtItemName[i], price[i], customersImageResource.getResourceId(i, 0)));
+            mCustomers.add(new CustomerItem(
+                    customersList[i],
+                    boughtItemName[i],
+                    price[i],
+                    customersImageResource.getResourceId(i, 0)));
         }
 
         customersImageResource.recycle();
-
-        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -130,5 +198,11 @@ public class CustomerListActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(powerReceiver);
     }
 }
