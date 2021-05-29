@@ -1,7 +1,10 @@
 package com.example.customermanagement;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +12,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,7 +28,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
     private static final String LOG_TAG = MainActivity.class.getName();
     private static final String PREF_KEY = MainActivity.class.getPackage().toString();
     private static final int RC_SIGN_IN = 123;
@@ -54,6 +58,13 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        // RandomAsyncTask
+        // Button button = findViewById(R.id.loginButton);
+        // new RandomAsyncTask(button).execute();
+
+        // RandomAsyncLoader
+        getSupportLoaderManager().restartLoader(0, null, this);
 
         Log.i(LOG_TAG, "onCreate");
     }
@@ -97,6 +108,10 @@ public class MainActivity extends AppCompatActivity {
 
         //Log.i(LOG_TAG , "Bejelentkezett: " + userName + ", jelszó: " + password);
 
+        // ha mind2 üres volt, akkor crash-elt az app, szóval így megoldva
+        if (userName.isEmpty() || password.isEmpty()) {
+            return;
+        } else {
         mAuth.signInWithEmailAndPassword(userName, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -108,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "User login failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
-        });
+        });}
     }
 
     public void startManaging() {
@@ -171,4 +186,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @NonNull
+    @Override
+    public Loader<String> onCreateLoader(int id, @Nullable Bundle args) {
+        return new RandomAsyncLoader(this);
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<String> loader, String data) {
+        Button button = findViewById(R.id.loginButton);
+        button.setText(data);
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<String> loader) {
+
+    }
 }

@@ -42,7 +42,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:onClick="login"
-        android:text="@string/login"
+        android:text="@string/none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

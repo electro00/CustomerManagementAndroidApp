@@ -21,6 +21,7 @@
     <string name="logout">Kijelentkezés</string>
     <string name="settings">Beállítások</string>
     <string name="view">Nézet</string>
+    <string name="none">-</string>
     <string-array name="phone_modes">
         <item>Otthoni</item>
         <item>Munkahelyi</item>
