@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/customerImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:adjustViewBounds="true" />
+
+        <TextView
+            android:id="@+id/customerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_below="@id/customerImage"
+            android:padding="8dp"
+            android:text="@string/customer_placeholder"
+            />
+
+        <TextView
+            android:id="@+id/boughtItemName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_below="@id/customerName"
+            android:padding="8dp"
+            android:text="@string/bought_item_name"
+            />
+
+        <TextView
+            android:id="@+id/boughtItemPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_below="@id/boughtItemName"
+            android:padding="8dp"
+            android:text="@string/bought_item_price"
+            android:textColor="@color/red"
+            android:layout_centerHorizontal="true"
+            />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

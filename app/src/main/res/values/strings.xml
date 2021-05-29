@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">CustomerManagement</string>
+    <string name="name">Név</string>
+    <string name="password">Jelszó</string>
+    <string name="login">Bejelentkezés</string>
+    <string name="registration">Regisztráció</string>
+    <string name="user_name">Felhasználónév</string>
+    <string name="email_address">Email cím</string>
+    <string name="password_again">Jelszó megerősítése</string>
+    <string name="cancel">Mégse</string>
+    <string name="phone_number">Telefonszám</string>
+    <string name="address">Postai cím</string>
+    <string name="customer">Vevő</string>
+    <string name="seller">Eladó</string>
+    <string name="customer_description">Megrendelő leírása</string>
+    <string name="loginGoogle">Bejelentkezés Google fiókkal</string>
+    <string name="customer_placeholder">Vásárló neve</string>
+    <string name="bought_item_name">Vásárolt termék</string>
+    <string name="bought_item_price">Vásárolt termék összege</string>
+    <string-array name="phone_modes">
+        <item>Otthoni</item>
+        <item>Munkahelyi</item>
+        <item>Mobil</item>
+        <item>Egyéb</item>
+    </string-array>
+
+    <string-array name="customer_name">
+        <item>Példa János</item>
+        <item>Hódi Ákos</item>
+        <item>Vass József</item>
+        <item>Kiss Jenő</item>
+        <item>Nagy Antal</item>
+    </string-array>
+
+    <string-array name="bought_item_name">
+        <item>Számítógép</item>
+        <item>Asztal</item>
+        <item>Tábla</item>
+        <item>Csoki</item>
+        <item>Egér</item>
+    </string-array>
+
+    <array name="price">
+        <item>60000 Dv</item>
+        <item>2000 Dv</item>
+        <item>5000 Dv</item>
+        <item>70 Dv</item>
+        <item>300 Dv</item>
+    </array>
+
+    <array name="customer_image">
+        <item>@drawable/man</item>
+        <item>@drawable/woman</item>
+        <item>@drawable/gentleman</item>
+        <item>@drawable/man</item>
+        <item>@drawable/gentleman</item>
+    </array>
+</resources>
