@@ -17,6 +17,10 @@
     <string name="customer_placeholder">Vásárló neve</string>
     <string name="bought_item_name">Vásárolt termék</string>
     <string name="bought_item_price">Vásárolt termék összege</string>
+    <string name="search">Keresés</string>
+    <string name="logout">Kijelentkezés</string>
+    <string name="settings">Beállítások</string>
+    <string name="view">Nézet</string>
     <string-array name="phone_modes">
         <item>Otthoni</item>
         <item>Munkahelyi</item>
