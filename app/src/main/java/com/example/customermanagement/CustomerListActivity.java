@@ -49,6 +49,8 @@ public class CustomerListActivity extends AppCompatActivity {
     private FirebaseFirestore mFirestore;
     private CollectionReference mCustomers;
 
+    private NotificationHandler mNotificationHandler;
+
     private int gridNumber = 1;
     private int favouritesItems = 0;
     private boolean viewRow = true;
@@ -83,6 +85,8 @@ public class CustomerListActivity extends AppCompatActivity {
         filter.addAction(Intent.ACTION_POWER_CONNECTED);
         filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
         this.registerReceiver(powerReceiver, filter);
+
+        mNotificationHandler = new NotificationHandler(this);
     }
 
     BroadcastReceiver powerReceiver = new BroadcastReceiver() {
@@ -163,6 +167,9 @@ public class CustomerListActivity extends AppCompatActivity {
         });
 
         queryData();
+        mNotificationHandler.cancel();
+
+        //TODO 8.gyakvidi/40perc
     }
 
     @Override
@@ -255,6 +262,8 @@ public class CustomerListActivity extends AppCompatActivity {
                 .addOnFailureListener(failure -> {
                         Toast.makeText(this, "Customer " + item._getId() + " cannot be changed", Toast.LENGTH_LONG).show();
                 });
+
+        mNotificationHandler.send(item.getName());
 
         queryData();
     }
