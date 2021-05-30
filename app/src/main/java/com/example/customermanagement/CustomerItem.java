@@ -4,6 +4,7 @@ public class CustomerItem {
     private String id;
     private String name;
     private String itemName;
+    private String paymentMethod;
     private String price;
     private int imageResource;
     private int favouritedCount;
@@ -11,9 +12,10 @@ public class CustomerItem {
     public CustomerItem() {
     }
 
-    public CustomerItem(String name, String itemName, String price, int imageResource, int favouritedCount) {
+    public CustomerItem(String name, String itemName, String paymentMethod, String price, int imageResource, int favouritedCount) {
         this.name = name;
         this.itemName = itemName;
+        this.paymentMethod = paymentMethod;
         this.price = price;
         this.imageResource = imageResource;
         this.favouritedCount = favouritedCount;
@@ -25,6 +27,10 @@ public class CustomerItem {
 
     public String getItemName() {
         return itemName;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
     }
 
     public String getPrice() {

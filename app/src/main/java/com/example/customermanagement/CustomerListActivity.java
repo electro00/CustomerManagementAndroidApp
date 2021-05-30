@@ -138,6 +138,8 @@ public class CustomerListActivity extends AppCompatActivity {
                 .getStringArray(R.array.customer_name);
         String[] boughtItemName = getResources()
                 .getStringArray(R.array.bought_item_name);
+        String[] paymentMethod = getResources()
+                .getStringArray(R.array.payment_method);
         String[] price = getResources()
                 .getStringArray(R.array.price);
 
@@ -149,6 +151,7 @@ public class CustomerListActivity extends AppCompatActivity {
             mCustomers.add(new CustomerItem(
                     customersList[i],
                     boughtItemName[i],
+                    paymentMethod[i],
                     price[i],
                     customersImageResource.getResourceId(i, 0), 0));
         }

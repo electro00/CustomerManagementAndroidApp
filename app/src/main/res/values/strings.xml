@@ -25,6 +25,7 @@
     <string name="deleteCustomer">Törlés</string>
     <string name="favourites">Kedvencek</string>
     <string name="addToFavourites">Kedvencekhez</string>
+    <string name="payment_method">Fizetési metódus</string>
     <string-array name="phone_modes">
         <item>Otthoni</item>
         <item>Munkahelyi</item>
@@ -34,10 +35,15 @@
 
     <string-array name="customer_name">
         <item>Példa János</item>
-        <item>Hódi Ákos</item>
+        <item>Teller Kata</item>
         <item>Vass József</item>
         <item>Kiss Jenő</item>
         <item>Nagy Antal</item>
+        <item>Hódi Ákos</item>
+        <item>Majoros Gábor</item>
+        <item>Bodó Helga</item>
+        <item>Barata Endre</item>
+        <item>Ézsiás Károly</item>
     </string-array>
 
     <string-array name="bought_item_name">
@@ -46,6 +52,24 @@
         <item>Tábla</item>
         <item>Csoki</item>
         <item>Egér</item>
+        <item>Szárítógép</item>
+        <item>Törölköző</item>
+        <item>Telefon</item>
+        <item>Táska</item>
+        <item>Kabát</item>
+    </string-array>
+
+    <string-array name="payment_method">
+        <item>Készpénz</item>
+        <item>Bitcoin</item>
+        <item>Utalás</item>
+        <item>Bankkártya</item>
+        <item>Bankkártya</item>
+        <item>Utalás</item>
+        <item>Készpénz</item>
+        <item>Készpénz</item>
+        <item>Bitcoin</item>
+        <item>Készpénz</item>
     </string-array>
 
     <array name="price">
@@ -54,13 +78,23 @@
         <item>5000 Dv</item>
         <item>70 Dv</item>
         <item>300 Dv</item>
+        <item>30000 Dv</item>
+        <item>1000 Dv</item>
+        <item>15000 Dv</item>
+        <item>800 Dv</item>
+        <item>1500 Dv</item>
     </array>
 
     <array name="customer_image">
-        <item>@drawable/man</item>
-        <item>@drawable/woman</item>
-        <item>@drawable/gentleman</item>
-        <item>@drawable/man</item>
-        <item>@drawable/gentleman</item>
+        <item>@drawable/kep0</item>
+        <item>@drawable/kep1</item>
+        <item>@drawable/kep2</item>
+        <item>@drawable/kep3</item>
+        <item>@drawable/kep4</item>
+        <item>@drawable/kep5</item>
+        <item>@drawable/kep6</item>
+        <item>@drawable/kep7</item>
+        <item>@drawable/kep8</item>
+        <item>@drawable/kep9</item>
     </array>
 </resources>

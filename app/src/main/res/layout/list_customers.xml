@@ -21,42 +21,51 @@
             android:id="@+id/customerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin"
             android:layout_below="@id/customerImage"
+            android:layout_marginTop="@dimen/default_margin"
             android:padding="8dp"
-            android:text="@string/customer_placeholder"
-            />
+            android:text="@string/customer_placeholder" />
 
         <TextView
             android:id="@+id/boughtItemName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin"
             android:layout_below="@id/customerName"
+            android:layout_marginTop="@dimen/default_margin"
             android:padding="8dp"
-            android:text="@string/bought_item_name"
-            />
+            android:text="@string/bought_item_name" />
+
+        <TextView
+            android:id="@+id/paymentMethod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/boughtItemName"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:text="@string/payment_method" />
 
         <TextView
             android:id="@+id/boughtItemPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/paymentMethod"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/default_margin"
-            android:layout_below="@id/boughtItemName"
+            android:textStyle="bold"
             android:padding="8dp"
             android:text="@string/bought_item_price"
-            android:textColor="@color/red"
-            android:layout_centerHorizontal="true"
-            />
+            android:textColor="@color/red" />
 
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_below="@id/boughtItemPrice"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/default_margin"
-            android:layout_centerHorizontal="true">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/add_to_favourites"
@@ -72,8 +81,8 @@
                 android:id="@+id/deleteCustomer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin"
                 android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
                 android:padding="8dp"
                 android:text="@string/deleteCustomer"
                 app:backgroundTint="#FF0000" />

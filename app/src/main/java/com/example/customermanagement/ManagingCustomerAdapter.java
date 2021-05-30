@@ -1,13 +1,11 @@
 package com.example.customermanagement;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -45,7 +43,9 @@ public class ManagingCustomerAdapter extends RecyclerView.Adapter<ManagingCustom
 
         if (holder.getAdapterPosition() > lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.slide_in_row);
+            Animation animation2 = AnimationUtils.loadAnimation(mContext, R.anim.rotate);
             holder.itemView.startAnimation(animation);
+            holder.itemView.startAnimation(animation2);
             lastPosition = holder.getAdapterPosition();
         }
     }
@@ -95,6 +95,7 @@ public class ManagingCustomerAdapter extends RecyclerView.Adapter<ManagingCustom
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mNameText;
         private TextView mBoughtItemText;
+        private TextView mPaymentMethodText;
         private TextView mPriceText;
         private ImageView mCustomerImage;
 
@@ -103,6 +104,7 @@ public class ManagingCustomerAdapter extends RecyclerView.Adapter<ManagingCustom
 
             mNameText = itemView.findViewById(R.id.customerName);
             mBoughtItemText = itemView.findViewById(R.id.boughtItemName);
+            mPaymentMethodText = itemView.findViewById(R.id.paymentMethod);
             mPriceText = itemView.findViewById(R.id.boughtItemPrice);
             mCustomerImage = itemView.findViewById(R.id.customerImage);
 
@@ -111,6 +113,7 @@ public class ManagingCustomerAdapter extends RecyclerView.Adapter<ManagingCustom
         public void bindTo(CustomerItem currentItem) {
             mNameText.setText(currentItem.getName());
             mBoughtItemText.setText(currentItem.getItemName());
+            mPaymentMethodText.setText(currentItem.getPaymentMethod());
             mPriceText.setText(currentItem.getPrice());
 
             Glide.with(mContext).load(currentItem.getImageResource()).into(mCustomerImage);
