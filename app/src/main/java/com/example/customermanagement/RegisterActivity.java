@@ -65,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         String userName = preferences.getString("userName", "");
         String password = preferences.getString("password", "");
 
-        userNameET.setText(userName);
+        userEmailET.setText(userName);
         passwordET.setText(password);
         passwordAgainET.setText(password);
 
