@@ -10,6 +10,14 @@
         />
 
     <item
+        android:id="@+id/favourites"
+        android:title="@string/favourites"
+        android:icon="@drawable/ic_favourites"
+        app:showAsAction="always"
+        app:actionLayout="@layout/custom_menu_item"
+        />
+
+    <item
         android:id="@+id/view_selector"
         android:title="@string/view"
         android:icon="@drawable/ic_grid_view"

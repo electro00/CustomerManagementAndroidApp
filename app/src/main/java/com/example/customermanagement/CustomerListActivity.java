@@ -14,13 +14,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -36,10 +42,15 @@ public class CustomerListActivity extends AppCompatActivity {
     private ArrayList<CustomerItem> mCustomerList;
     private ManagingCustomerAdapter mAdapter;
 
+    private FrameLayout redCircle;
+    private TextView contentTextView;
+
+
     private FirebaseFirestore mFirestore;
     private CollectionReference mCustomers;
 
     private int gridNumber = 1;
+    private int favouritesItems = 0;
     private boolean viewRow = true;
     private int queryLimit = 10;
 
@@ -100,9 +111,11 @@ public class CustomerListActivity extends AppCompatActivity {
 
         //mCustomers.whereEqualTo()...
 
-        mCustomers.orderBy("name").limit(queryLimit).get().addOnSuccessListener(queryDocumentSnapshots -> {
+        mCustomers.orderBy("favouritedCount", Query.Direction.DESCENDING).limit(queryLimit).get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
             for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                 CustomerItem item = document.toObject(CustomerItem.class);
+                item.setId(document.getId());
                 mCustomerList.add(item);
             }
 
@@ -133,10 +146,23 @@ public class CustomerListActivity extends AppCompatActivity {
                     customersList[i],
                     boughtItemName[i],
                     price[i],
-                    customersImageResource.getResourceId(i, 0)));
+                    customersImageResource.getResourceId(i, 0), 0));
         }
 
         customersImageResource.recycle();
+    }
+
+    public void deleteCustomer(CustomerItem item) {
+        DocumentReference ref = mCustomers.document(item._getId());
+
+        ref.delete().addOnSuccessListener(success -> {
+            Log.d(LOG_TAG, "Customer successfully deleted: " + item._getId());
+        })
+        .addOnFailureListener(failure -> {
+            Toast.makeText(this, "customer " + item._getId() + " cannot be deleted", Toast.LENGTH_LONG).show();
+        });
+
+        queryData();
     }
 
     @Override
@@ -171,6 +197,9 @@ public class CustomerListActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 finish();
                 return true;
+            case R.id.favourites:
+                Log.d(LOG_TAG, "Favourites clicked");
+                return true;
             case R.id.setting_button:
                 Log.d(LOG_TAG, "Setting clicked");
                 return true;
@@ -197,7 +226,37 @@ public class CustomerListActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        final MenuItem alertMenuItem = menu.findItem(R.id.favourites);
+        FrameLayout rootView = (FrameLayout) alertMenuItem.getActionView();
+
+        redCircle = (FrameLayout) rootView.findViewById(R.id.view_alert_red_circle);
+        contentTextView = (TextView) rootView.findViewById(R.id.view_alert_count_textview);
+
+        rootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(alertMenuItem);
+            }
+        });
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void updateAlertIcon(CustomerItem item) {
+        favouritesItems = (favouritesItems + 1);
+        if (0 < favouritesItems) {
+            contentTextView.setText(String.valueOf(favouritesItems));
+        } else {
+            contentTextView.setText("");
+        }
+
+        redCircle.setVisibility((favouritesItems > 0) ? View.VISIBLE : View.GONE);
+
+        mCustomers.document(item._getId()).update("favouritedCount", item.getFavouritedCount() + 1)
+                .addOnFailureListener(failure -> {
+                        Toast.makeText(this, "Customer " + item._getId() + " cannot be changed", Toast.LENGTH_LONG).show();
+                });
+
+        queryData();
     }
 
     @Override

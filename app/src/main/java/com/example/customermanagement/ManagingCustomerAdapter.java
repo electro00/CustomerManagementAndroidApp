@@ -1,11 +1,13 @@
 package com.example.customermanagement;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -103,6 +105,7 @@ public class ManagingCustomerAdapter extends RecyclerView.Adapter<ManagingCustom
             mBoughtItemText = itemView.findViewById(R.id.boughtItemName);
             mPriceText = itemView.findViewById(R.id.boughtItemPrice);
             mCustomerImage = itemView.findViewById(R.id.customerImage);
+
         }
 
         public void bindTo(CustomerItem currentItem) {
@@ -111,6 +114,9 @@ public class ManagingCustomerAdapter extends RecyclerView.Adapter<ManagingCustom
             mPriceText.setText(currentItem.getPrice());
 
             Glide.with(mContext).load(currentItem.getImageResource()).into(mCustomerImage);
+
+            itemView.findViewById(R.id.add_to_favourites).setOnClickListener(view -> ((CustomerListActivity)mContext).updateAlertIcon(currentItem));
+            itemView.findViewById(R.id.deleteCustomer).setOnClickListener(view -> ((CustomerListActivity)mContext).deleteCustomer(currentItem));
         }
     }
 

@@ -22,6 +22,9 @@
     <string name="settings">Beállítások</string>
     <string name="view">Nézet</string>
     <string name="none">-</string>
+    <string name="deleteCustomer">Törlés</string>
+    <string name="favourites">Kedvencek</string>
+    <string name="addToFavourites">Kedvencekhez</string>
     <string-array name="phone_modes">
         <item>Otthoni</item>
         <item>Munkahelyi</item>
